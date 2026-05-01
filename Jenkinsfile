@@ -1,19 +1,18 @@
 pipeline {
-agent any
+    agent any
 
-stages {
+    stages {
 
-    stage('Build') {
-        steps {
-            sh 'javac CrudOperation.java'
+        stage('Build') {
+            steps {
+                bat 'javac CrudOperation.java'
+            }
+        }
+
+        stage('Run') {
+            steps {
+                bat 'java CrudOperation'
+            }
         }
     }
-
-    stage('Run') {
-        steps {
-            sh 'echo 5 | java CrudOperation'
-        }
-    }
-}
-
 }
