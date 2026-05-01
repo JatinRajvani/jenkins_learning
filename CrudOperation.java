@@ -2,102 +2,68 @@ import java.util.*;
 
 public class CrudOperation {
 
-static class Student {
-    int id;
-    String name;
-    int age;
+    static class Student {
+        int id;
+        String name;
+        int age;
 
-    Student(int id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
+        Student(int id, String name, int age) {
+            this.id = id;
+            this.name = name;
+            this.age = age;
+        }
     }
-}
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    Scanner sc = new Scanner(System.in);
-    ArrayList<Student> students = new ArrayList<>();
-    int choice;
+        ArrayList<Student> students = new ArrayList<>();
 
-    do {
-        System.out.println("\n===== CRUD OPERATIONS =====");
-        System.out.println("1. Insert Data");
-        System.out.println("2. Read Data");
-        System.out.println("3. Update Data");
-        System.out.println("4. Delete Data");
-        System.out.println("5. Exit");
-        System.out.print("Enter choice: ");
+        System.out.println("===== CRUD OPERATIONS (AUTO MODE) =====");
 
-        choice = sc.nextInt();
+        // 🔹 INSERT
+        System.out.println("\n[INSERT]");
+        students.add(new Student(1, "Jatin", 20));
+        students.add(new Student(2, "Raj", 22));
+        students.add(new Student(3, "Amit", 21));
+        System.out.println("Data Inserted Successfully!");
 
-        switch (choice) {
+        // 🔹 READ
+        System.out.println("\n[READ]");
+        printStudents(students);
 
-            case 1:
-                System.out.print("Enter ID: ");
-                int id = sc.nextInt();
-                sc.nextLine();
+        // 🔹 UPDATE (update id = 2)
+        System.out.println("\n[UPDATE]");
+        int updateId = 2;
+        boolean updated = false;
 
-                System.out.print("Enter Name: ");
-                String name = sc.nextLine();
-
-                System.out.print("Enter Age: ");
-                int age = sc.nextInt();
-
-                students.add(new Student(id, name, age));
-                System.out.println("Data Inserted Successfully!");
+        for (Student s : students) {
+            if (s.id == updateId) {
+                s.name = "Raj Updated";
+                s.age = 23;
+                updated = true;
                 break;
-
-            case 2:
-                System.out.println("\nID\tNAME\tAGE");
-                for (Student s : students) {
-                    System.out.println(s.id + "\t" + s.name + "\t" + s.age);
-                }
-                break;
-
-            case 3:
-                System.out.print("Enter ID to Update: ");
-                int updateId = sc.nextInt();
-                sc.nextLine();
-
-                boolean updated = false;
-
-                for (Student s : students) {
-                    if (s.id == updateId) {
-                        System.out.print("Enter New Name: ");
-                        s.name = sc.nextLine();
-
-                        System.out.print("Enter New Age: ");
-                        s.age = sc.nextInt();
-
-                        updated = true;
-                        break;
-                    }
-                }
-
-                System.out.println(updated ? "Updated Successfully!" : "Record Not Found!");
-                break;
-
-            case 4:
-                System.out.print("Enter ID to Delete: ");
-                int deleteId = sc.nextInt();
-
-                boolean deleted = students.removeIf(s -> s.id == deleteId);
-
-                System.out.println(deleted ? "Deleted Successfully!" : "Record Not Found!");
-                break;
-
-            case 5:
-                System.out.println("Program Ended");
-                break;
-
-            default:
-                System.out.println("Invalid Choice!");
+            }
         }
 
-    } while (choice != 5);
+        System.out.println(updated ? "Updated Successfully!" : "Record Not Found!");
+        printStudents(students);
 
-    sc.close();
-}
+        // 🔹 DELETE (delete id = 1)
+        System.out.println("\n[DELETE]");
+        int deleteId = 1;
+        boolean deleted = students.removeIf(s -> s.id == deleteId);
 
+        System.out.println(deleted ? "Deleted Successfully!" : "Record Not Found!");
+        printStudents(students);
+
+        System.out.println("\nProgram Finished Successfully!");
+    }
+
+    // Utility method
+    public static void printStudents(ArrayList<Student> students) {
+        System.out.println("ID\tNAME\tAGE");
+        for (Student s : students) {
+            System.out.println(s.id + "\t" + s.name + "\t" + s.age);
+        }
+    }
 }
